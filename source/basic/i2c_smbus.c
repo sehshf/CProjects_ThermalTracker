@@ -73,13 +73,13 @@ int32_T AccessI2CBus(const char *fName, int32_T addr)
 
 	if ((fd = open(fName, O_RDWR)) < 0)
 	{
-        sprintf(stderr, "Failed to open the I2C bus.");
+        fprintf(stderr, "Failed to open the I2C bus.");
         exit(1);
     }
 
     if (ioctl(fd, I2C_SLAVE, addr) < 0)
     {
-        sprintf(stderr, "Failed to communicate with the I2C slave device.\n");
+        fprintf(stderr, "Failed to communicate with the I2C slave device.\n");
         exit(1);
     }
 
@@ -112,7 +112,7 @@ void SMBusWrite8(int32_T file, uint8_T reg, uint8_T val)
 
 	if (write(file, buf, 2) != 2)
 	{
-		sprintf(stderr, "Failed to write to the I2C bus.\n");
+		fprintf(stderr, "Failed to write to the I2C bus.\n");
 	}
 
 } // END: SMBusWrite8()
@@ -133,14 +133,16 @@ void SMBusWrite8(int32_T file, uint8_T reg, uint8_T val)
 *  		   Oct 2016
 *  -------------------------------------------------------  *
 */
-void SMBusRead8(int32_T file)
+uint8_T SMBusRead8(int32_T file)
 {
 	uint8_T *buf;
 
-	if (read(file, buf, 1) != 1)
+	if (read(file, &buf, 1) != 1)
 	{
-		sprintf(stderr, "Failed to read from the I2C bus.\n");
+		fprintf(stderr, "Failed to read from the I2C bus.\n");
 	}
+
+	return buf;
 
 } // END: SMBusRead8()
 
@@ -153,7 +155,7 @@ void SMBusRead8(int32_T file)
 /**
 *  -------------------------------------------------------  *
 *  FUNCTION:
-*      PUBLICFUCTION()
+*      LOCALFUCTION()
 *      What this function is doing.
 *
 *  Inputs:

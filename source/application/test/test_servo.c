@@ -1,7 +1,7 @@
 /*
- * main.c
+ * servo_test.c
  *
- *  Created on: 22/08/2016
+ *  Created on: 20/10/2016
  *      Author: ses
  */
 
@@ -11,7 +11,6 @@
  * **************************************************
  */
 #include <stdio.h>
-#include <sys/mman.h>
 
 /*
  * **************************************************
@@ -19,13 +18,28 @@
  * **************************************************
  */
 #include "portable.h"
+#include "servo_motor.h"
 
-int main()
+int main(void)
 {
+	uint8_T *motor;
+	int8_T  *degree;
 
+	InitServos();
 
-	return PASSED;
+	while(1)
+    {
 
+		printf("Enter motor\n");
+		scanf("%d", &motor);
+
+		printf("Enter degree:\n");
+		scanf("%d", &degree);
+
+		DriveServoAbs((uint8_T)motor, (int8_T)degree);
+    }
+
+    return PASSED;
 } // END: main()
 
-// EOF: main.c
+// EOF: servo_test.c

@@ -13,6 +13,9 @@
  * SYSTEM INCLUDE FILES								*
  * **************************************************
  */
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
 #include <fcntl.h>
@@ -22,7 +25,7 @@
  * APPLICATION INCLUDE FILES						*
  * **************************************************
  */
-
+#include "portable.h"
 
 /*
  * **************************************************
@@ -62,6 +65,11 @@
  * PROTOTYPES										*
  * **************************************************
  */
+int32_T AccessI2CBus(const char *fName, int32_T addr);
+
+void SMBusWrite8(int32_T file, uint8_T reg, uint8_T val);
+
+uint8_T SMBusRead8(int32_T file);
 
 
 #endif // _I2C_SMBU_H_

@@ -28,9 +28,19 @@
  * DEFINITIONS										*
  * **************************************************
  */
+// Pulse defines in ms
+#define SERVO_PULSE_NEUT	1500
+#define SERVO_PULSE_MIN		600
+#define SERVO_PULSE_MAX		2400
 
 
+#define SERVO_POS_MAX	90
+#define SERVO_CCW			1		// Positive direction
+#define SERVO_CW			-1		// Negative direction
 
+// PWM channels where motors are connected to
+#define YAW_MOTOR			0
+#define PITCH_MOTOR			1
 /*
  * **************************************************
  * MACROS											*
@@ -61,6 +71,13 @@
  * PROTOTYPES										*
  * **************************************************
  */
+void InitServos(void);
+
+void DriveServoAbs(uint8_T motor, int8_T degree);
+
+void DriveServoInc(uint8_T motor, boolean_T direction, int8_T degree);
+
+int8_T GetServoPos(void);
 
 
 #endif // _SERVO_MOTOR_H_

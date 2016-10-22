@@ -27,8 +27,10 @@
  * DEFINITIONS										*
  * **************************************************
  */
-// Device address
-#define PCA9685_ADDR	0x40
+// Device specifics
+#define PCA9685_ADDR		0x40
+#define PCA9685_CLK			25000000
+#define PCA9685_COUNT		4096		// 12 bit count
 
 // PCA9685 registers
 #define MODE1				0x00
@@ -38,10 +40,6 @@
 #define LED0_ON_H 			0x07
 #define LED0_OFF_L 			0x08
 #define LED0_OFF_H 			0x09
-#define LED1_ON_L 			0x0A
-#define LED1_ON_H 			0x0B
-#define LED1_OFF_L 			0x0C
-#define LED1_OFF_H 			0x0C
 
 #define ALL_LED_ON_L		0xFA
 #define ALL_LED_ON_H		0xFB
@@ -53,6 +51,9 @@
 #define PCA9685_OUTDRV		0x04
 #define PCA9685_ALLCALL 	0x01
 #define PCA9685_SLEEP   	0x10
+
+// Settings
+#define PWM_COUNT_DELAY		41		// 1% of total count (4096)
 
 /*
  * **************************************************
@@ -84,6 +85,11 @@
  * PROTOTYPES										*
  * **************************************************
  */
+void SetupPCABoard(void);
+
+void SetPCAFreq(uint16_T freq);
+
+void SetPCAPWM(uint8_T channel, uint16_T pulse);
 
 
 #endif // _PCA9685_H_

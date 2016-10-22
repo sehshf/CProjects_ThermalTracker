@@ -34,7 +34,7 @@
  * FILE SCOPE VARIABLES (static)					*
  * **************************************************
  */
-
+static int8_T 	servoPos = 0;	// Can vary from -90 to 90
 
 
 /*
@@ -67,12 +67,12 @@
 *  		   Oct 2016
 *  -------------------------------------------------------  *
 */
-pf_T InitServos(void)
+void InitServos(void)
 {
-
 	SetupPCABoard();
-
-	return PASSED;
+	SetPCAFreq(50);		// 50 Hz
+	DriveServoAbs(YAW_MOTOR  , 0);
+	DriveServoAbs(PITCH_MOTOR, 0);
 
 } // END: InitServos()
 
@@ -93,11 +93,17 @@ pf_T InitServos(void)
 *  		   Oct 2016
 *  -------------------------------------------------------  *
 */
-pf_T DriveServoInc(uint8_T motor, boolean_T direction, uint8_T degree)
+void DriveServoAbs(uint8_T motor, int8_T degree)
 {
-    return PASSED;
+	uint16_T pulse;
 
-} // END: DriveServo()
+	pulse = SERVO_PULSE_NEUT + degree * (SERVO_PULSE_MAX - SERVO_PULSE_MIN) / SERVO_POS_MAX / 2;	// pulse [ms]
+
+	servoPos = degree;		// Update position
+
+	SetPCAPWM(motor, pulse);
+
+} // END: DriveServoAbs()
 
 /**
 *  -------------------------------------------------------  *
@@ -115,11 +121,36 @@ pf_T DriveServoInc(uint8_T motor, boolean_T direction, uint8_T degree)
 *  		   Oct 2016
 *  -------------------------------------------------------  *
 */
-pf_T DriveServoAbs(uint8_T motor, uint8_T degree)
+void DriveServoInc(uint8_T motor, boolean_T direction, int8_T degree)
 {
-    return PASSED;
+    servoPos = servoPos + direction * degree;
+    servoPos = min(SERVO_POS_MAX, max(-SERVO_POS_MAX, servoPos));
+    DriveServoAbs(motor, servoPos);
 
-} // END: DriveServoAbs()
+} // END: DriveServoInc()
+
+
+/**
+*  -------------------------------------------------------  *
+*  FUNCTION:
+*      GETSERVOPOS()
+*      What this function is doing.
+*
+*  Inputs:
+*      x : Input
+*
+*  Outputs:
+*      y : Return 0 when succeeded.
+*
+*  Author: Ehsan Shafiei
+*  		   Oct 2016
+*  -------------------------------------------------------  *
+*/
+int8_T GetServoPos(void)
+{
+	return servoPos;
+
+} // END: GetServoPos()
 
 
 /*
