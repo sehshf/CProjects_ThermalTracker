@@ -15,14 +15,6 @@
 
 /*
  * **************************************************
- * LOCAL DECLARATIONS								*
- * **************************************************
- */
-
-
-
-/*
- * **************************************************
  * GLOBAL VARIABLES (extern)						*
  * **************************************************
  */
@@ -55,13 +47,14 @@
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      ACCESSI2CBUS()
-*      What this function is doing.
+*      Get access to the I2C bus through a file.
 *
 *  Inputs:
-*      x : Input
+*      *fName : File name for I2C communication.
+*      addr	  : Address of the slave device.
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
+*      fd : Returns the file descriptor.
 *
 *  Author: Ehsan Shafiei
 *  		   Oct 2016
@@ -91,13 +84,14 @@ int32_T AccessI2CBus(const char *fName, int32_T addr)
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      SMBUSWRITE8()
-*      What this function is doing.
+*      Write a single byte to the I2C bus.
 *
 *  Inputs:
-*      x : Input
+*      file : File descriptor.
+*      reg	: Slave device register.
+*      val	: The value that should be assigned to the register.
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
 *  		   Oct 2016
@@ -121,13 +115,13 @@ void SMBusWrite8(int32_T file, uint8_T reg, uint8_T val)
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      SMBUSREAD8()
-*      What this function is doing.
+*      read a single byte from the I2C bus.
 *
 *  Inputs:
-*      x : Input
+*      file : File descriptor.
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
+*      buf : Returns the read value.
 *
 *  Author: Ehsan Shafiei
 *  		   Oct 2016
@@ -135,7 +129,7 @@ void SMBusWrite8(int32_T file, uint8_T reg, uint8_T val)
 */
 uint8_T SMBusRead8(int32_T file)
 {
-	uint8_T *buf;
+	uint8_T buf;
 
 	if (read(file, &buf, 1) != 1)
 	{
@@ -162,7 +156,7 @@ uint8_T SMBusRead8(int32_T file)
 *      x : Input
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
+*      y : Returns 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
 *  		   Aug 2016

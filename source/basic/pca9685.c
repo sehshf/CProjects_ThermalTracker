@@ -15,14 +15,6 @@
 
 /*
  * **************************************************
- * LOCAL DECLARATIONS								*
- * **************************************************
- */
-
-
-
-/*
- * **************************************************
  * GLOBAL VARIABLES (extern)						*
  * **************************************************
  */
@@ -57,17 +49,15 @@ static void DeviceWakeUp(void);
 /**
 *  -------------------------------------------------------  *
 *  FUNCTION:
-*      PUBLICFUCTION()
-*      What this function is doing.
+*      SETUPPCABOARD()
+*      Set up and initialize PCA9685.
 *
 *  Inputs:
-*      x : Input
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
-*  		   Aug 2016
+*  		   Oct 2016
 *  -------------------------------------------------------  *
 */
 void SetupPCABoard(void)
@@ -84,16 +74,15 @@ void SetupPCABoard(void)
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      SETPCAFREQ()
-*      What this function is doing.
+*      Set the PWN frequency of PCA9685.
 *
 *  Inputs:
-*      x : Input
+*      freq : Frequency [Hz] from 45 to 1526
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
-*  		   Aug 2016
+*  		   Oct 2016
 *  -------------------------------------------------------  *
 */
 void SetPCAFreq(uint16_T freq)
@@ -126,13 +115,13 @@ void SetPCAFreq(uint16_T freq)
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      SETPCAPWM()
-*      What this function is doing.
+*      Specify the PWM signal with starting delay and duty cycle.
 *
 *  Inputs:
-*      x : Input
+*      channel 	: The PWM channel on PCA9685
+*      pulse	: Pulse width [ms]
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
 *  		   Aug 2016
@@ -142,13 +131,13 @@ void SetPCAPWM(uint8_T channel, uint16_T pulse)
 {
 	uint16_T onCnt, offCnt;
 
-	onCnt  = (uint16_T)PWM_COUNT_DELAY;
-	offCnt = (uint16_T)(onCnt + pulse * pcaFreq * (PCA9685_COUNT - 1) / 1000 / 1000);
+	onCnt  = PWM_COUNT_DELAY;
+	offCnt = onCnt + pulse * pcaFreq * (PCA9685_COUNT - 1) / 1000 / 1000;
 
-	SMBusWrite8(fd, LED0_ON_L  + 4 * channel, (uint8_T)(onCnt));
-	SMBusWrite8(fd, LED0_ON_H  + 4 * channel, (uint8_T)(onCnt >> 8));
-	SMBusWrite8(fd, LED0_OFF_L + 4 * channel, (uint8_T)(offCnt));
-	SMBusWrite8(fd, LED0_OFF_H + 4 * channel, (uint8_T)(offCnt >> 8));
+	SMBusWrite8(fd, LED0_ON_L  + 4 * channel, BYTE_L(onCnt ));
+	SMBusWrite8(fd, LED0_ON_H  + 4 * channel, BYTE_H(onCnt ));
+	SMBusWrite8(fd, LED0_OFF_L + 4 * channel, BYTE_L(offCnt));
+	SMBusWrite8(fd, LED0_OFF_H + 4 * channel, BYTE_H(offCnt));
 
 } // END: SetPCAPWM()
 
@@ -162,13 +151,11 @@ void SetPCAPWM(uint8_T channel, uint16_T pulse)
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      INITONOFFREG()
-*      What this function is doing.
+*      Initialize the LED ON and OFF registers in PCA9685.
 *
 *  Inputs:
-*      x : Input
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
 *  		   Oct 2016
@@ -188,13 +175,11 @@ static void InitOnOffReg(void)
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      INITDEVICEMODE()
-*      What this function is doing.
+*      Initialize MODE1 and MODE2 of PCA9685.
 *
 *  Inputs:
-*      x : Input
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
 *  		   Oct 2016
@@ -212,13 +197,11 @@ static void InitDeviceMode(void)
 *  -------------------------------------------------------  *
 *  FUNCTION:
 *      DEVICEWAKEUP()
-*      What this function is doing.
+*      Activate the PWM channels on PCA9685.
 *
 *  Inputs:
-*      x : Input
 *
 *  Outputs:
-*      y : Return 0 when succeeded.
 *
 *  Author: Ehsan Shafiei
 *  		   Oct 2016

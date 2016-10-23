@@ -23,35 +23,36 @@ LIBS = -lm -lpthread
 #LIBS = -lmylib -lm
 
 # Output executable file
-OUTPUTFILE = TestServo
+OUTPUTFILE = MultiTask
 
 # Path
 RELEASEDIR  = release
 EXEDIR      = $(RELEASEDIR)/exe
 OBJDIR      = $(RELEASEDIR)/obj
+DRIVER		= source/driver
 BASIC		= source/basic
 APPLICATION = source/application
-TEST 		= source/application/test
 
 # define any directories containing header files other than /usr/include
 #
 INCLUDES =  	 \
+-I$(DRIVER) 	 \
 -I$(BASIC)		 \
--I$(APPLICATION) \
--I$(TEST)
+-I$(APPLICATION)
 
 # Specify all paths of source files
-VPATH = $(BASIC) : $(APPLICATION) : $(TEST)
+VPATH = $(DRIVER) : $(BASIC) : $(APPLICATION)
 
 # define the C source files
 # Extract source directories
 SRC_DIRS = $(subst :, ,$(VPATH))
 
 SRCS =  		\
-i2c_smbus.c		\
-pca9685.c		\
-servo_motor.c	\
-test_servo.c
+main.c			\
+rt_tasks.c		\
+task1.c 		\
+task2.c 		\
+task3.c	
 
 # define the C object files 
 #

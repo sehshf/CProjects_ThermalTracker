@@ -89,6 +89,9 @@ typedef double 							real64_T;
 #define BITSET(a, bit)	((a) |=  (bit))
 #define BITCLR(a, bit)	((a) &= ~(bit))
 
+#define BYTE_L(w)		((uint8_T)(w))
+#define BYTE_H(w)		((uint8_T)((uint16_T)(w) >> 8))
+
 #define NUM_ELEM(array) (sizeof(array) / sizeof(*(array)))
 
 

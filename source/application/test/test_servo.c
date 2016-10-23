@@ -22,8 +22,9 @@
 
 int main(void)
 {
-	uint8_T *motor;
-	int8_T  *degree;
+	uint8_T motor;
+	int16_T  degree;
+	int16_T direction;
 
 	InitServos();
 
@@ -31,12 +32,16 @@ int main(void)
     {
 
 		printf("Enter motor\n");
-		scanf("%d", &motor);
+		scanf("%hhu", &motor);
 
 		printf("Enter degree:\n");
-		scanf("%d", &degree);
+		scanf("%hd", &degree);
 
-		DriveServoAbs((uint8_T)motor, (int8_T)degree);
+		//DriveServoAbs(motor, (int8_T)degree);
+
+		printf("Enter direction:\n");
+		scanf("%hd", &direction);
+		DriveServoInc(motor, (int8_T)direction, (int8_T)degree);
     }
 
     return PASSED;

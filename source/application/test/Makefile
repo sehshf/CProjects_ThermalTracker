@@ -23,36 +23,36 @@ LIBS = -lm -lpthread
 #LIBS = -lmylib -lm
 
 # Output executable file
-OUTPUTFILE = MultiTask
+OUTPUTFILE = TestServo
 
 # Path
-RELEASEDIR  = release
+PROJECT 	= C:/workspace/CProjects/ThermalTracker
+BASIC		= $(PROJECT)/source/basic
+APPLICATION = $(PROJECT)/source/application
+TEST 		= $(APPLICATION)/test
+RELEASEDIR  = $(TEST)/test_release
 EXEDIR      = $(RELEASEDIR)/exe
 OBJDIR      = $(RELEASEDIR)/obj
-DRIVER		= source/driver
-BASIC		= source/basic
-APPLICATION = source/application
 
 # define any directories containing header files other than /usr/include
 #
 INCLUDES =  	 \
--I$(DRIVER) 	 \
 -I$(BASIC)		 \
--I$(APPLICATION)
+-I$(APPLICATION) \
+-I$(TEST)
 
 # Specify all paths of source files
-VPATH = $(DRIVER) : $(BASIC) : $(APPLICATION)
+VPATH = $(BASIC) : $(APPLICATION) : $(TEST)
 
 # define the C source files
 # Extract source directories
 SRC_DIRS = $(subst :, ,$(VPATH))
 
 SRCS =  		\
-main.c			\
-rt_tasks.c		\
-task1.c 		\
-task2.c 		\
-task3.c	
+i2c_smbus.c		\
+pca9685.c		\
+servo_motor.c	\
+test_servo.c
 
 # define the C object files 
 #
