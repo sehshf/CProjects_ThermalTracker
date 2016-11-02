@@ -1,5 +1,5 @@
 /*
- * servo_test.c
+ * test_servo.c
  *
  *  Created on: 20/10/2016
  *      Author: ses
@@ -47,4 +47,4 @@ int main(void)
     return PASSED;
 } // END: main()
 
-// EOF: servo_test.c
+// EOF: test_servo.c

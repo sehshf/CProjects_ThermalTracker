@@ -39,8 +39,8 @@
 #define SERVO_CW			-1		// Negative direction
 
 // PWM channels where motors are connected to
-#define YAW_MOTOR			0
-#define PITCH_MOTOR			1
+#define PAN_MOTOR			0
+#define TILT_MOTOR			1
 #define NUM_MOTORS			2
 
 

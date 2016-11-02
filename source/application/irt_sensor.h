@@ -1,25 +1,20 @@
 /*
- * i2c_smbus.h
+ * irt_sensor.h
  *
- *  Created on: 22/10/2016
+ *  Created on: 26/10/2016
  *      Author: ses
  */
 
-#ifndef _I2C_SMBUS_H_
-#define _I2C_SMBUS_H_
+#ifndef _IRT_SENSOR_H_
+#define _IRT_SENSOR_H_
+
 
 /*
  * **************************************************
  * SYSTEM INCLUDE FILES								*
  * **************************************************
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <linux/i2c.h>
-#include <linux/i2c-dev.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
+#include <wiringpiI2C.h>
 
 
 /*
@@ -27,14 +22,20 @@
  * APPLICATION INCLUDE FILES						*
  * **************************************************
  */
-#include "portable.h"
+#include "i2c_smbus.h"
+#include "common.h"
+
 
 /*
  * **************************************************
  * DEFINITIONS										*
  * **************************************************
  */
-#define I2C_FILE	"/dev/i2c-1"
+// Device specifics
+#define IRTSNSR_ADDR		0x5A
+#define TAMB_REG			0x06
+#define TOBJ_REG			0x07
+#define IRT_RES				0.02
 
 
 /*
@@ -67,14 +68,13 @@
  * PROTOTYPES										*
  * **************************************************
  */
-int32_T AccessI2CBus(const char *fName, int32_T addr);
+void InitIRTSnsr(void);
 
-void SMBusWrite8(int32_T file, uint8_T reg, uint8_T val);
-
-uint8_T SMBusRead8(int32_T file);
+real32_T ReadIRTSnsr(uint8_T reg);
 
 
-#endif // _I2C_SMBU_H_
+#endif // _IRT_SENSOR_H_
 
-// EOF: i2c_smbus.h
+// EOF: irt_sensor.h
+
 
