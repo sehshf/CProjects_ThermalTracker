@@ -19,11 +19,11 @@ CFLAGS = -g -Wall
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
 #   option, something like (this will link in libmylib.so and libm.so:
-LIBS = -lm -lpthread 
+LIBS = -lm -lpthread -lwiringPi
 #LIBS = -lmylib -lm
 
 # Output executable file
-OUTPUTFILE = TestCam
+OUTPUTFILE = TestIRT
 
 # Path
 PROJECT 	= C:/workspace/CProjects/ThermalTracker
@@ -49,7 +49,11 @@ VPATH = $(BASIC) : $(APPLICATION) : $(TEST)
 SRC_DIRS = $(subst :, ,$(VPATH))
 
 SRCS =  		\
-test_cam.c
+common.c 		\
+i2c_smbus.c		\
+irt_sensor.c	\
+pca9685.c		\
+test_irt.c
 
 # define the C object files 
 #
